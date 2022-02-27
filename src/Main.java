@@ -48,7 +48,6 @@ public class Main {
 	
 	public void View() {
 		cls();
-		Ascending();
 		for(int i = 0; i < Karyawan.size(); i++) {
 			System.out.println((i+1) + ".");
 			System.out.println("Kode Karyawan			: " + Karyawan.get(i).getId());
@@ -102,29 +101,65 @@ public class Main {
 		System.out.println("Enter to return...");
 		scan.nextLine();
 		
+		int countM = 0, countS = 0, countA = 0;
 		
 		if(jabatan_karyawan == "Manager") {
 			gaji_karyawan = 8000000;
+			countM++;
 		}
 		else if(jabatan_karyawan == "Supervisor") {
 			gaji_karyawan = 6000000;
+			countS++;
 		}
 		else {
 			gaji_karyawan = 4000000;
+			countA++;
 		}
 		Karyawan.add(new karyawan(kode_karyawan, nama_karyawan, jenis_karyawan, jabatan_karyawan, gaji_karyawan));
+		Ascending();
+		
+		if(countM == 4 || countM == 7) {
+			for(int i = 0; i < Karyawan.size(); i++) {
+				if(Karyawan.get(i).getJabatan().equals("Manager")) {
+					int temp = (int) (Karyawan.get(i).getGaji() * 1.1);
+					Karyawan.get(i).setGaji(temp);
+				}
+			}
+		}
+		
+		if(countS == 4 || countS == 7) {
+			for(int i = 0; i < Karyawan.size(); i++) {
+				if(Karyawan.get(i).getJabatan().equals("Supervisor")) {
+					int temp = (int) (Karyawan.get(i).getGaji() * 1.075);
+					Karyawan.get(i).setGaji(temp);
+				}
+			}
+		}
+		
+		if(countA == 4 || countA == 7) {
+			for(int i = 0; i < Karyawan.size(); i++) {
+				if(Karyawan.get(i).getJabatan().equals("Admin")) {
+					int temp = (int) (Karyawan.get(i).getGaji() * 1.05);
+					Karyawan.get(i).setGaji(temp);
+				}
+			}
+		}
 	}
 	
 	public void Update() {
 		View();
 		System.out.println("");
 		String nama_karyawan = "", jenis_karyawan = "", jabatan_karyawan = "";
-		int gaji_karyawan = 0, idx = 0;
+		int gaji_karyawan = 0, idx = 1;
 		
-		while(idx < 1 || idx > Karyawan.size()) {
+		while(idx < 0 || idx > Karyawan.size()) {
 			System.out.print("Input nomor urutan karyawan yang ingin diupdate: ");
 			idx = scan.nextInt();
 			scan.nextLine();
+		}
+		
+		if(idx == 0) {
+			return;
 		}
 		
 		while(true) {
